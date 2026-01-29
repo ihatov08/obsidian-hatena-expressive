@@ -21,7 +21,7 @@ export function parseFrontmatter(content: string): {
 
 	let frontmatter: FrontmatterData = {};
 	try {
-		const parsed = parseYaml(yamlContent);
+		const parsed: unknown = parseYaml(yamlContent);
 		frontmatter = (parsed && typeof parsed === 'object') ? parsed as FrontmatterData : {};
 	} catch {
 		frontmatter = {};

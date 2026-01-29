@@ -15,9 +15,8 @@ export async function executeExportCssCommand(
 		await navigator.clipboard.writeText(css);
 
 		notice.hide();
-		new Notice(
-			'Expressive Code CSS copied to clipboard! Paste it into your Hatena Blog theme settings.'
-		);
+		// eslint-disable-next-line obsidianmd/ui/sentence-case
+		new Notice('CSS copied to clipboard. Paste it into your Hatena blog theme.');
 	} catch (error) {
 		notice.hide();
 		console.error('Failed to generate CSS:', error);

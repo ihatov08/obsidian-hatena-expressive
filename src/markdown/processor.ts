@@ -36,7 +36,7 @@ export async function createMarkdownProcessor(options: ProcessorOptions) {
 		.use(remarkRemoveObsidianSyntax)
 		.use(remarkRehype, { allowDangerousHtml: true })
 		.use(rehypeRaw)
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-argument
 		.use(rehypeExpressiveCode as any, {
 			themes: [options.theme],
 			defaultProps: {
@@ -60,9 +60,9 @@ export async function convertMarkdownToHtml(
 export async function getExpressiveCodeStyles(theme: string): Promise<string> {
 	const { ExpressiveCodeEngine } = await import('@expressive-code/core');
 
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const engine = new ExpressiveCodeEngine({
-		themes: [theme as any],
+		// Theme name strings are valid but types expect ExpressiveCodeTheme objects
+		themes: [theme] as unknown as [],
 	});
 
 	const baseStyles = await engine.getBaseStyles();

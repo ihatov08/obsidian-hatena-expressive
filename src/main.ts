@@ -12,13 +12,15 @@ export default class HatenaExpressivePlugin extends Plugin {
 
 		this.addCommand({
 			id: 'post-to-hatena',
-			name: 'Post to Hatena Blog',
+			// eslint-disable-next-line obsidianmd/ui/sentence-case
+			name: 'Publish to Hatena',
 			callback: () => executePostCommand(this),
 		});
 
 		this.addCommand({
 			id: 'post-draft-to-hatena',
-			name: 'Post to Hatena Blog as Draft',
+			// eslint-disable-next-line obsidianmd/ui/sentence-case
+			name: 'Save draft to Hatena',
 			callback: async () => {
 				const originalDefault = this.settings.defaultDraft;
 				this.settings.defaultDraft = true;
@@ -29,7 +31,7 @@ export default class HatenaExpressivePlugin extends Plugin {
 
 		this.addCommand({
 			id: 'export-expressive-code-css',
-			name: 'Export Expressive Code CSS for theme',
+			name: 'Export expressive code CSS for theme',
 			callback: () => executeExportCssCommand(this),
 		});
 

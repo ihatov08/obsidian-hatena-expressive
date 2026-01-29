@@ -1,6 +1,5 @@
 import { App, PluginSettingTab, Setting } from 'obsidian';
 import type HatenaExpressivePlugin from './main';
-import type { HatenaPluginSettings } from './types';
 
 export class HatenaSettingTab extends PluginSettingTab {
 	plugin: HatenaExpressivePlugin;
@@ -14,10 +13,12 @@ export class HatenaSettingTab extends PluginSettingTab {
 		const { containerEl } = this;
 		containerEl.empty();
 
-		containerEl.createEl('h2', { text: 'Hatena Blog Settings' });
+		new Setting(containerEl).setName('Hatena blog').setHeading();
 
 		new Setting(containerEl)
-			.setName('API Key')
+			// eslint-disable-next-line obsidianmd/ui/sentence-case
+			.setName('API key')
+			// eslint-disable-next-line obsidianmd/ui/sentence-case
 			.setDesc('Hatena user API key. Get it from your Hatena account settings.')
 			.addText((text) =>
 				text
@@ -30,10 +31,9 @@ export class HatenaSettingTab extends PluginSettingTab {
 			);
 
 		new Setting(containerEl)
-			.setName('Root Endpoint')
-			.setDesc(
-				"Hatena blog's AtomPub root endpoint. Find it in your blog settings under 'Advanced Settings > AtomPub'."
-			)
+			.setName('Root endpoint')
+			// eslint-disable-next-line obsidianmd/ui/sentence-case
+			.setDesc("Hatena blog's AtomPub root endpoint. Find it in your blog advanced options.")
 			.addText((text) =>
 				text
 					.setPlaceholder('https://blog.hatena.ne.jp/userId/blogId/atom')
@@ -44,19 +44,19 @@ export class HatenaSettingTab extends PluginSettingTab {
 					})
 			);
 
-		containerEl.createEl('h2', { text: 'Expressive Code Settings' });
+		new Setting(containerEl).setName('Expressive code').setHeading();
 
 		new Setting(containerEl)
 			.setName('Theme')
 			.setDesc('Syntax highlighting theme for code blocks.')
 			.addDropdown((dropdown) =>
 				dropdown
-					.addOption('github-dark', 'GitHub Dark')
-					.addOption('github-light', 'GitHub Light')
+					.addOption('github-dark', 'GitHub dark')
+					.addOption('github-light', 'GitHub light')
 					.addOption('dracula', 'Dracula')
 					.addOption('nord', 'Nord')
-					.addOption('min-light', 'Min Light')
-					.addOption('min-dark', 'Min Dark')
+					.addOption('min-light', 'Min light')
+					.addOption('min-dark', 'Min dark')
 					.setValue(this.plugin.settings.theme)
 					.onChange(async (value) => {
 						this.plugin.settings.theme = value;
@@ -64,10 +64,10 @@ export class HatenaSettingTab extends PluginSettingTab {
 					})
 			);
 
-		containerEl.createEl('h2', { text: 'Post Settings' });
+		new Setting(containerEl).setName('Posting').setHeading();
 
 		new Setting(containerEl)
-			.setName('Default to Draft')
+			.setName('Default to draft')
 			.setDesc('When enabled, posts will be saved as drafts by default.')
 			.addToggle((toggle) =>
 				toggle

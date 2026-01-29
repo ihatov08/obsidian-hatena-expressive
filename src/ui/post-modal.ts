@@ -31,7 +31,7 @@ export class PostModal extends Modal {
 		contentEl.empty();
 
 		contentEl.createEl('h2', {
-			text: this.isUpdate ? 'Update Post' : 'Post to Hatena Blog',
+			text: this.isUpdate ? 'Update post' : 'Post to Hatena blog',
 		});
 
 		new Setting(contentEl)
@@ -60,7 +60,7 @@ export class PostModal extends Modal {
 			);
 
 		new Setting(contentEl)
-			.setName('Post as Draft')
+			.setName('Post as draft')
 			.setDesc('Save as draft instead of publishing')
 			.addToggle((toggle) =>
 				toggle.setValue(this.isDraft).onChange((value) => {

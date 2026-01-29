@@ -17,7 +17,7 @@ export async function executePostCommand(plugin: HatenaExpressivePlugin): Promis
 	const { settings, app } = plugin;
 
 	if (!settings.apiKey || !settings.rootEndpoint) {
-		new Notice('Please configure API Key and Root Endpoint in settings');
+		new Notice('Please configure API key and root endpoint in settings');
 		return;
 	}
 
@@ -110,7 +110,7 @@ async function publishPost(
 		}
 
 		// Update frontmatter
-		await app.fileManager.processFrontMatter(file, (fm) => {
+		await app.fileManager.processFrontMatter(file, (fm: Record<string, unknown>) => {
 			fm.title = options.title;
 			fm.categories = options.categories;
 			if (response.memberUri) {
