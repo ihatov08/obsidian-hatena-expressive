@@ -1,11 +1,10 @@
 {
-	"id": "sample-plugin",
-	"name": "Sample Plugin",
+	"id": "hatena-expressive",
+	"name": "Hatena Blog Publisher with Expressive Code",
 	"version": "1.0.0",
 	"minAppVersion": "0.15.0",
-	"description": "Demonstrates some of the capabilities of the Obsidian API.",
-	"author": "Obsidian",
-	"authorUrl": "https://obsidian.md",
-	"fundingUrl": "https://obsidian.md/pricing",
-	"isDesktopOnly": false
+	"description": "Post Obsidian notes to Hatena Blog with Expressive Code syntax highlighting",
+	"author": "ihatov08",
+	"authorUrl": "https://github.com/ihatov08",
+	"isDesktopOnly": true
 }

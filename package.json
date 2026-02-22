@@ -1,7 +1,7 @@
 {
-	"name": "obsidian-sample-plugin",
+	"name": "obsidian-hatena-expressive",
 	"version": "1.0.0",
-	"description": "This is a sample plugin for Obsidian (https://obsidian.md)",
+	"description": "Post Obsidian notes to Hatena Blog with Expressive Code syntax highlighting",
 	"main": "main.js",
 	"type": "module",
 	"scripts": {
@@ -10,10 +10,17 @@
 		"version": "node version-bump.mjs && git add manifest.json versions.json",
 		"lint": "eslint ."
 	},
-	"keywords": [],
-	"license": "0-BSD",
+	"keywords": [
+		"obsidian",
+		"hatena",
+		"blog",
+		"expressive-code",
+		"syntax-highlighting"
+	],
+	"license": "MIT",
 	"devDependencies": {
 		"@types/node": "^16.11.6",
+		"@types/he": "^1.2.0",
 		"esbuild": "0.25.5",
 		"eslint-plugin-obsidianmd": "0.1.9",
 		"globals": "14.0.0",
@@ -24,6 +31,18 @@
 		"jiti": "2.6.1"
 	},
 	"dependencies": {
-		"obsidian": "latest"
+		"obsidian": "latest",
+		"unified": "^11.0.0",
+		"remark-parse": "^11.0.0",
+		"remark-frontmatter": "^5.0.0",
+		"remark-rehype": "^11.0.0",
+		"rehype-stringify": "^10.0.0",
+		"rehype-raw": "^7.0.0",
+		"rehype-expressive-code": "^0.41.0",
+		"@expressive-code/core": "^0.41.0",
+		"unist-util-visit": "^5.0.0",
+		"yaml": "^2.3.0",
+		"he": "^1.2.0",
+		"mime": "^4.0.0"
 	}
 }
