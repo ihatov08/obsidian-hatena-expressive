@@ -58,15 +58,25 @@ export async function convertMarkdownToHtml(
 }
 
 export async function getExpressiveCodeStyles(theme: string): Promise<string> {
-	const { ExpressiveCodeEngine } = await import('@expressive-code/core');
+	// Process a minimal code block through the full pipeline to extract CSS
+	const html = await convertMarkdownToHtml(
+		'```js\nconsole.log("test")\n```',
+		{ theme }
+	);
 
-	const engine = new ExpressiveCodeEngine({
-		// Theme name strings are valid but types expect ExpressiveCodeTheme objects
-		themes: [theme] as unknown as [],
-	});
+	// Extract all <style> tag contents from the rendered output
+	const styleRegex = /<style>([\s\S]*?)<\/style>/g;
+	let css = '';
+	let match;
+	while ((match = styleRegex.exec(html)) !== null) {
+		if (match[1]) {
+			css += match[1] + '\n';
+		}
+	}
 
-	const baseStyles = await engine.getBaseStyles();
-	const themeStyles = await engine.getThemeStyles();
+	if (!css) {
+		throw new Error('No CSS was generated. Check your theme setting.');
+	}
 
-	return baseStyles + '\n' + themeStyles;
+	return css.trim();
 }
