@@ -54,7 +54,13 @@ export async function convertMarkdownToHtml(
 ): Promise<string> {
 	const processor = await createMarkdownProcessor(options);
 	const file = await processor.process(markdown);
-	return String(file);
+	return stripStyleAndScriptTags(String(file));
+}
+
+function stripStyleAndScriptTags(html: string): string {
+	return html
+		.replace(/<style>[\s\S]*?<\/style>/g, '')
+		.replace(/<script[\s\S]*?<\/script>/g, '');
 }
 
 export async function getExpressiveCodeStyles(theme: string): Promise<string> {
