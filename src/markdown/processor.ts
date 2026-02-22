@@ -29,7 +29,7 @@ export interface ProcessorOptions {
 	theme: string;
 }
 
-export async function createMarkdownProcessor(options: ProcessorOptions) {
+async function createMarkdownProcessor(options: ProcessorOptions) {
 	const processor = unified()
 		.use(remarkParse)
 		.use(remarkFrontmatter, ['yaml'])
@@ -48,29 +48,30 @@ export async function createMarkdownProcessor(options: ProcessorOptions) {
 	return processor;
 }
 
-export async function convertMarkdownToHtml(
+async function processToRawHtml(
 	markdown: string,
 	options: ProcessorOptions
 ): Promise<string> {
 	const processor = await createMarkdownProcessor(options);
 	const file = await processor.process(markdown);
-	return stripStyleAndScriptTags(String(file));
+	return String(file);
 }
 
-function stripStyleAndScriptTags(html: string): string {
-	return html
+export async function convertMarkdownToHtml(
+	markdown: string,
+	options: ProcessorOptions
+): Promise<string> {
+	const raw = await processToRawHtml(markdown, options);
+	return raw
 		.replace(/<style>[\s\S]*?<\/style>/g, '')
 		.replace(/<script[\s\S]*?<\/script>/g, '');
 }
 
 export async function getExpressiveCodeStyles(theme: string): Promise<string> {
-	// Process a minimal code block through the full pipeline to extract CSS
-	const html = await convertMarkdownToHtml(
-		'```js\nconsole.log("test")\n```',
-		{ theme }
-	);
+	const html = await processToRawHtml('```js\nconsole.log("test")\n```', {
+		theme,
+	});
 
-	// Extract all <style> tag contents from the rendered output
 	const styleRegex = /<style>([\s\S]*?)<\/style>/g;
 	let css = '';
 	let match;
@@ -85,4 +86,27 @@ export async function getExpressiveCodeStyles(theme: string): Promise<string> {
 	}
 
 	return css.trim();
+}
+
+export async function getExpressiveCodeScripts(
+	theme: string
+): Promise<string> {
+	const html = await processToRawHtml('```js\nconsole.log("test")\n```', {
+		theme,
+	});
+
+	const scriptRegex = /<script[^>]*>([\s\S]*?)<\/script>/g;
+	let js = '';
+	let match;
+	while ((match = scriptRegex.exec(html)) !== null) {
+		if (match[1]) {
+			js += match[1] + '\n';
+		}
+	}
+
+	if (!js) {
+		throw new Error('No JS was generated. Check your theme setting.');
+	}
+
+	return js.trim();
 }
